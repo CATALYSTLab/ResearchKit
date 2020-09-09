@@ -86,7 +86,7 @@ static const CGFloat TestingInProgressIndicatorRadius = 6.0;
 }
 
 #define PULSE_OPACITY 1
-#define PULSE_SCALE 0
+#define PULSE_SCALE 1
 - (void)setActive:(BOOL)active
 {
     _active = active;
