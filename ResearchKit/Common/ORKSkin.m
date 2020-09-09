@@ -96,7 +96,7 @@ CGFloat ORKBodyToBodyParagraphPaddingStandard = 22.0;
 
 CGFloat ORKStepContainerTitleToBulletTopPaddingShort = 37.0;
 
-CGFloat ORKStepContainerTopContentHeightPercentage = 36.0;
+CGFloat ORKStepContainerTopContentHeightPercentage = 27.7;
 CGFloat ORKStepContainerFirstItemTopPaddingPercentage = 9.0;
 
 CGFloat ORKStepContentIconImageViewDimension = 80.0;
