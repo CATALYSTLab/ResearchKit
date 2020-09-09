@@ -339,6 +339,14 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
     
     currentVolume = (int)(currentVolume / 0.0625) * 0.0625;
     
+    // if the device is muted we can't play a tone
+    if (currentVolume == 0) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(volumeIsMuted)]) {
+            [self.delegate volumeIsMuted];
+            return nil;
+        }
+    }
+
     // check in volume curve table for offset
     NSDecimalNumber *offsetDueToVolume = [NSDecimalNumber decimalNumberWithString:_volumeCurve[[NSString stringWithFormat:@"%.4f",currentVolume]]];
     

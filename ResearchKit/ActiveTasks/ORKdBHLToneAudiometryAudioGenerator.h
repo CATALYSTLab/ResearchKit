@@ -82,6 +82,7 @@ ORK_CLASS_AVAILABLE
 
 @required
 -(void)toneWillStartClipping;
+-(void)volumeIsMuted;
 
 @end
 

@@ -431,5 +431,13 @@
     }
 }
 
+- (void)volumeIsMuted {
+    UIAlertController *deviceIsMutedWarningAlert = [UIAlertController alertControllerWithTitle:ORKLocalizedString(@"dBHL_TONE_AUDIOMETRY_INTRO_TITLE", nil)  message:ORKLocalizedString(@"dBHL_TONE_AUDIOMETRY_INTRO_TEXT", nil) preferredStyle:UIAlertControllerStyleAlert];
+    [deviceIsMutedWarningAlert addAction:[UIAlertAction actionWithTitle:ORKLocalizedString(@"BUTTON_DONE", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self estimatedBHLAndPlayToneWithFrequency:_freqLoopList[_indexOfFreqLoopList]];
+    }]];
+    [self presentViewController:deviceIsMutedWarningAlert animated:YES completion:nil];
+}
+
 @end
 
