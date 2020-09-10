@@ -176,8 +176,9 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
 
         _retspl = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:[NSString stringWithFormat:@"retspl_%@", [headphones uppercaseString]] ofType:@"plist"]];
         
-        if ([[headphones uppercaseString] isEqualToString:@"AIRPODS"]) {
-            _volumeCurve = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"volume_curve_AIRPODS" ofType:@"plist"]];
+        NSString *pathForVolumeFile = [[NSBundle bundleForClass:[self class]] pathForResource:[NSString stringWithFormat:@"volume_curve_%@", [headphones uppercaseString]] ofType:@"plist"];
+        if (pathForVolumeFile) {
+            _volumeCurve = [NSDictionary dictionaryWithContentsOfFile:pathForVolumeFile];
         } else {
             _volumeCurve = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"volume_curve_WIRED" ofType:@"plist"]];
         }
