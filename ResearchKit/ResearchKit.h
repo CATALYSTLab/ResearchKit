@@ -112,6 +112,8 @@
 #import <ResearchKit/ORKReviewViewController.h>
 #import <ResearchKit/ORKCustomStepViewController.h>
 
+#import <ResearchKit/ORKdBHLToneAudiometryAudioGenerator.h>
+
 #import <ResearchKit/ORKRecorder.h>
 
 #import <ResearchKit/ORKConsentDocument.h>
