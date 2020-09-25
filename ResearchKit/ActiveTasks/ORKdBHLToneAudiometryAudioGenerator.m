@@ -189,7 +189,8 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
 }
 
 - (void)dealloc {
-    [self stop];
+    AUGraphDisconnectNodeInput(_mGraph, _mixerNode, 0);
+    AUGraphUpdate(_mGraph, NULL);
     
     AUGraphStop(_mGraph);
     AUGraphUninitialize(_mGraph);
