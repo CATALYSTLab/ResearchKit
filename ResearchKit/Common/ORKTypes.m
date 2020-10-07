@@ -41,6 +41,8 @@ ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierEarPods = @"EARPODS";
 
 ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierSennheiserMB360 = @"SENNHEISER_MB360";
 
+ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierEPOSSennheiserADAPT360 = @"EPOS_SENNHEISER_ADAPT360";
+
 ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierUnknown = @"UNKNOWN";
 
 ORKTrailMakingTypeIdentifier const ORKTrailMakingTypeIdentifierA = @"A";
