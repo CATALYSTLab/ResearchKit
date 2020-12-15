@@ -265,6 +265,8 @@
         _currentdBHL = [self dBHLToneAudiometryStep].initialdBHLValue;
         _initialDescent = YES;
         _ackOnce = NO;
+        _usingMissingList = YES;
+        _indexOfStepUpMissingList = 0;
         _transitionsDictionary = nil;
         _transitionsDictionary = [NSMutableDictionary dictionary];
         if (_resultSample) {
