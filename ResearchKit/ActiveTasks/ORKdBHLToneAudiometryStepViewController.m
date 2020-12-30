@@ -398,6 +398,9 @@
     NSNumber *currentKey = [NSNumber numberWithFloat:_currentdBHL];
     ORKdBHLToneAudiometryTransitions *currentTransitionObject = [_transitionsDictionary objectForKey:currentKey];
     if ((currentTransitionObject.userInitiated/currentTransitionObject.totalTransitions >= 0.5) && currentTransitionObject.totalTransitions >= 2) {
+        if (dBHL - _dBHLStepUpSize <= _dBHLMinimumThreshold) {
+            return YES;
+        }
         ORKdBHLToneAudiometryTransitions *previousTransitionObject = [_transitionsDictionary objectForKey:[NSNumber numberWithFloat:(dBHL - _dBHLStepUpSize)]];
         if ((previousTransitionObject.userInitiated/previousTransitionObject.totalTransitions <= 0.5) && (previousTransitionObject.totalTransitions >= 2)) {
             if (currentTransitionObject.totalTransitions == 2) {
