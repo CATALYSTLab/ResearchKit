@@ -126,6 +126,8 @@
 }
 
 - (void)configureContainerView {
+    [_containerView setStepTopContentImage:self.customStep.image];
+    [_containerView setStepTopContentImageContentMode:self.customStep.imageContentMode];
     [_containerView setStepTitle:self.customStep.title];
     [_containerView setStepText:self.customStep.text];
     [_containerView setStepDetailText:self.customStep.detailText];
