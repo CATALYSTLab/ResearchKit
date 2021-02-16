@@ -51,6 +51,8 @@
 
 @implementation ORKdBHLToneAudiometryStep
 
+static void (^_logger)(NSString *message) = nil;
+
 + (Class)stepViewControllerClass {
     return [ORKdBHLToneAudiometryStepViewController class];
 }
@@ -192,6 +194,14 @@
             && (self.earPreference == castObject.earPreference)
             && ORKEqualObjects(self.headphoneType, castObject.headphoneType)
             && ORKEqualObjects(self.frequencyList, castObject.frequencyList));
+}
+
++ (void (^)(NSString *message))logger {
+    return _logger;
+}
+
++ (void)setLogger:(void (^)(NSString * _Nonnull))logger {
+    _logger = logger;
 }
 
 @end

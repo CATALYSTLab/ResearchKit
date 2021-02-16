@@ -52,6 +52,7 @@
 
 
 #import "ORKdBHLToneAudiometryAudioGenerator.h"
+#import "ORKdBHLToneAudiometryStep.h"
 
 @import AudioToolbox;
 
@@ -207,7 +208,9 @@ static OSStatus ORKdBHLAudioGeneratorZeroTone(void *inRefCon,
     _fadeInDuration = 0.2;
     _rampUp = YES;
     _globaldBHL = dBHL;
-    
+
+    ORKdBHLToneAudiometryStep.logger([NSString stringWithFormat:@"Playing a %d Hz sound at intensity %d dBHL", (int) _frequency, (int) _globaldBHL]);
+
     [self play];
     
 }

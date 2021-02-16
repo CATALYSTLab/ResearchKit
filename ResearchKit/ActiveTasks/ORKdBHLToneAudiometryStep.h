@@ -70,6 +70,8 @@ ORK_CLASS_AVAILABLE
 
 @property (nonatomic, copy, nullable) NSArray *frequencyList;
 
+@property (atomic, class, nullable) void (^logger)(NSString *message);
+
 @end
 
 NS_ASSUME_NONNULL_END
