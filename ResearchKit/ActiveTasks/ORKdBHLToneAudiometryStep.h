@@ -48,6 +48,10 @@ ORK_CLASS_AVAILABLE
 
 @property (nonatomic, assign) double initialdBHLValue;
 
+@property (nonatomic, assign) double initialdBHLIncrementValue;
+
+@property (nonatomic, assign) double initialdBHLMaxValue;
+
 @property (nonatomic, assign) double dBHLStepUpSize;
 
 @property (nonatomic, assign) double dBHLStepUpSizeFirstMiss;
@@ -65,6 +69,8 @@ ORK_CLASS_AVAILABLE
 @property (nonatomic, assign) ORKAudioChannel earPreference;
 
 @property (nonatomic, copy, nullable) NSArray *frequencyList;
+
+@property (atomic, class, nullable) void (^logger)(NSString *message);
 
 @end
 

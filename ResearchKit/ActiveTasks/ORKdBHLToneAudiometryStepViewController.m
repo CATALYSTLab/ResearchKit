@@ -262,7 +262,18 @@
                                                animated:YES];
         
         _numberOfTransitionsPerFreq = 0;
+
         _currentdBHL = [self dBHLToneAudiometryStep].initialdBHLValue;
+        if (_indexOfFreqLoopList > 0) {
+            ORKdBHLToneAudiometryFrequencySample *previousResult = _arrayOfResultSamples[_indexOfFreqLoopList - 1];
+            double previousThreshold = [previousResult calculatedThreshold];
+            if (previousThreshold != ORKInvalidDBHLValue) { // if there was a determined previous threshold
+                _currentdBHL = MIN(previousThreshold + [self dBHLToneAudiometryStep].initialdBHLIncrementValue, [self dBHLToneAudiometryStep].initialdBHLMaxValue);
+            } else if (_arrayOfResultUnits.count < _maxNumberOfTransitionsPerFreq) { // if there was no response for the previous frequency
+                _currentdBHL = [self dBHLToneAudiometryStep].initialdBHLMaxValue;
+            }
+        }
+
         _initialDescent = YES;
         _ackOnce = NO;
         _usingMissingList = YES;
