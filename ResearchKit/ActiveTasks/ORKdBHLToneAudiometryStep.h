@@ -48,6 +48,10 @@ ORK_CLASS_AVAILABLE
 
 @property (nonatomic, assign) double initialdBHLValue;
 
+@property (nonatomic, assign) double initialdBHLIncrementValue;
+
+@property (nonatomic, assign) double initialdBHLMaxValue;
+
 @property (nonatomic, assign) double dBHLStepUpSize;
 
 @property (nonatomic, assign) double dBHLStepUpSizeFirstMiss;

@@ -40,6 +40,8 @@
 #define ORKdBHLToneAudiometryTaskDefaultMaxPostStimulusDelay 1.0
 #define ORKdBHLToneAudiometryTaskDefaultTransitionsPerFrequency 20
 #define ORKdBHLToneAudiometryTaskInitialdBHLValue 30.0
+#define ORKdBHLToneAudiometryTaskInitialdBHLIncrementValue 20.0
+#define ORKdBHLToneAudiometryTaskInitialdBHLMaxValue 70.0
 #define ORKdBHLToneAudiometryTaskdBHLStepUpSize 5.0
 #define ORKdBHLToneAudiometryTaskdBHLStepUpSizeFirstMiss 20.0
 #define ORKdBHLToneAudiometryTaskdBHLStepUpSizeSecondMiss 10.0
@@ -67,6 +69,8 @@
     self.postStimulusDelay = ORKdBHLToneAudiometryTaskDefaultMaxPostStimulusDelay;
     self.maxNumberOfTransitionsPerFrequency = ORKdBHLToneAudiometryTaskDefaultTransitionsPerFrequency;
     self.initialdBHLValue = ORKdBHLToneAudiometryTaskInitialdBHLValue;
+    self.initialdBHLIncrementValue = ORKdBHLToneAudiometryTaskInitialdBHLIncrementValue;
+    self.initialdBHLMaxValue = ORKdBHLToneAudiometryTaskInitialdBHLMaxValue;
     self.dBHLStepUpSize = ORKdBHLToneAudiometryTaskdBHLStepUpSize;
     self.dBHLStepUpSizeFirstMiss = ORKdBHLToneAudiometryTaskdBHLStepUpSizeFirstMiss;
     self.dBHLStepUpSizeSecondMiss = ORKdBHLToneAudiometryTaskdBHLStepUpSizeSecondMiss;
@@ -106,6 +110,8 @@
     step.postStimulusDelay = self.postStimulusDelay;
     step.maxNumberOfTransitionsPerFrequency = self.maxNumberOfTransitionsPerFrequency;
     step.initialdBHLValue = self.initialdBHLValue;
+    step.initialdBHLIncrementValue = self.initialdBHLIncrementValue;
+    step.initialdBHLMaxValue = self.initialdBHLMaxValue;
     step.dBHLStepDownSize = self.dBHLStepDownSize;
     step.dBHLStepUpSize = self.dBHLStepUpSize;
     step.dBHLMinimumThreshold = self.dBHLMinimumThreshold;
@@ -125,6 +131,8 @@
         ORK_DECODE_DOUBLE(aDecoder, maxRandomPreStimulusDelay);
         ORK_DECODE_DOUBLE(aDecoder, postStimulusDelay);
         ORK_DECODE_DOUBLE(aDecoder, initialdBHLValue);
+        ORK_DECODE_DOUBLE(aDecoder, initialdBHLIncrementValue);
+        ORK_DECODE_DOUBLE(aDecoder, initialdBHLMaxValue);
         ORK_DECODE_DOUBLE(aDecoder, dBHLStepDownSize);
         ORK_DECODE_DOUBLE(aDecoder, dBHLStepUpSize);
         ORK_DECODE_DOUBLE(aDecoder, dBHLStepUpSizeFirstMiss);
@@ -145,6 +153,8 @@
     ORK_ENCODE_DOUBLE(aCoder, maxRandomPreStimulusDelay);
     ORK_ENCODE_DOUBLE(aCoder, postStimulusDelay);
     ORK_ENCODE_DOUBLE(aCoder, initialdBHLValue);
+    ORK_ENCODE_DOUBLE(aCoder, initialdBHLIncrementValue);
+    ORK_ENCODE_DOUBLE(aCoder, initialdBHLMaxValue);
     ORK_ENCODE_DOUBLE(aCoder, dBHLStepDownSize);
     ORK_ENCODE_DOUBLE(aCoder, dBHLStepUpSize);
     ORK_ENCODE_DOUBLE(aCoder, dBHLStepUpSizeFirstMiss);
@@ -171,6 +181,8 @@
             && (self.postStimulusDelay == castObject.postStimulusDelay)
             && (self.maxNumberOfTransitionsPerFrequency == castObject.maxNumberOfTransitionsPerFrequency)
             && (self.initialdBHLValue == castObject.initialdBHLValue)
+            && (self.initialdBHLIncrementValue == castObject.initialdBHLIncrementValue)
+            && (self.initialdBHLMaxValue == castObject.initialdBHLMaxValue)
             && (self.dBHLStepDownSize == castObject.dBHLStepDownSize)
             && (self.dBHLStepUpSize == castObject.dBHLStepUpSize)
             && (self.dBHLStepUpSizeFirstMiss == castObject.dBHLStepUpSizeFirstMiss)
