@@ -57,16 +57,16 @@ ORK_CLASS_AVAILABLE
 
 
 /**
- Returns the object in the keychain for the provided key.
+ Returns the dictionary in the keychain for the provided key.
  
  @param key         The key used to set the data in the keychain.
  @param error       If failure occurred, an `NSError` object indicating the reason for the
                     failure. The value of this parameter is `nil` if `result` does not
                     indicate failure.
  
- @return An object or `nil` if key is not valid.
+ @return A dictionary  or `nil` if key is not valid.
  */
-+ (nullable id<NSSecureCoding>)objectForKey:(nonnull NSString *)key error:(NSError * __autoreleasing _Nullable *)error;
++ (nullable NSDictionary *)dictionaryForKey:(nonnull NSString *)key error:(NSError * __autoreleasing _Nullable *)error;
 
 /**
  Removes the object in the keychain for the provided key.
