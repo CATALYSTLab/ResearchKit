@@ -41,7 +41,15 @@ ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierEarPods = @"EARPODS";
 
 ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierSennheiserMB360 = @"SENNHEISER_MB360";
 
-ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierEPOSSennheiserADAPT360 = @"EPOS_SENNHEISER_ADAPT360";
+ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierEPOSSennheiserADAPT360Bluetooth = @"EPOS_SENNHEISER_ADAPT360_BLUETOOTH";
+
+ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierEPOSSennheiserADAPT360Wired = @"EPOS_SENNHEISER_ADAPT360_WIRED";
+
+ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierSennheiserHD300Pro = @"SENNHEISER_HD300PRO";
+
+ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierSennheiserHD280Pro = @"SENNHEISER_HD280PRO";
+
+ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierRadioEarDD45 = @"RADIOEAR_DD45";
 
 ORKHeadphoneTypeIdentifier const ORKHeadphoneTypeIdentifierUnknown = @"UNKNOWN";
 
