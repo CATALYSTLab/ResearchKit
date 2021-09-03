@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated;
 
 @property (nonatomic, strong, readonly) ORKdBHLToneAudiometryButton *tapButton;
+@property (nonatomic, strong, readonly) UILabel *debugLabel;
 
 @end
 

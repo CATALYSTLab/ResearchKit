@@ -232,6 +232,13 @@ static const CGFloat TestingInProgressIndicatorRadius = 6.0;
         _tapButton.accessibilityTraits = UIAccessibilityTraitButton | UIAccessibilityTraitAllowsDirectInteraction;
 
         [self addSubview:_tapButton];
+
+        _debugLabel = [[UILabel alloc] init];
+        _debugLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _debugLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle2];
+        _debugLabel.adjustsFontForContentSizeCategory = YES;
+        [self addSubview:_debugLabel];
+
         self.translatesAutoresizingMaskIntoConstraints = NO;
 
         [self setUpConstraints];
@@ -293,6 +300,20 @@ static const CGFloat TestingInProgressIndicatorRadius = 6.0;
                                                                                multiplier:1.0
                                                                                  constant:0.0],
                                                    [NSLayoutConstraint constraintWithItem:_tapButton
+                                                                                attribute:NSLayoutAttributeCenterY
+                                                                                relatedBy:NSLayoutRelationEqual
+                                                                                   toItem:self
+                                                                                attribute:NSLayoutAttributeCenterY
+                                                                               multiplier:1.0
+                                                                                 constant:0.0],
+                                                   [NSLayoutConstraint constraintWithItem:_debugLabel
+                                                                                attribute:NSLayoutAttributeCenterX
+                                                                                relatedBy:NSLayoutRelationEqual
+                                                                                   toItem:self
+                                                                                attribute:NSLayoutAttributeCenterX
+                                                                               multiplier:1.0
+                                                                                 constant:0.0],
+                                                   [NSLayoutConstraint constraintWithItem:_debugLabel
                                                                                 attribute:NSLayoutAttributeCenterY
                                                                                 relatedBy:NSLayoutRelationEqual
                                                                                    toItem:self
