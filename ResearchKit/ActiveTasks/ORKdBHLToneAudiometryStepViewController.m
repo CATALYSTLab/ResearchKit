@@ -327,13 +327,17 @@
     double delay2 = (double)arc4random_uniform(10)/10;
     double preStimulusDelay = delay1 + delay2 + 1;
     _resultUnit.preStimulusDelay = preStimulusDelay;
-    
+
     _preStimulusDelayWorkBlock = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, ^{
+        if ([self dBHLToneAudiometryStep].isInTestingMode) {
+            self.dBHLToneAudiometryContentView.debugLabel.text = [NSString localizedStringWithFormat:ORKLocalizedString(@"dBHL_TONE_AUDIOMETRY_TESTING_DEBUG_INTENSITY_FMT", nil), @(_currentdBHL)];
+        }
         [_audioGenerator playSoundAtFrequency:[freq floatValue] onChannel:_audioChannel dBHL:_currentdBHL];
     });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(preStimulusDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), _preStimulusDelayWorkBlock);
     
     _pulseDurationWorkBlock = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, ^{
+        self.dBHLToneAudiometryContentView.debugLabel.text = nil;
         [_audioGenerator stop];
     });
     // adding 0.2 seconds to account for the fadeInDuration which is being set in ORKdBHLToneAudiometryAudioGenerator
