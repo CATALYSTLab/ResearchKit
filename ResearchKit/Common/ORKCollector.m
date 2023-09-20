@@ -32,7 +32,7 @@
 #import "ORKCollector.h"
 #import "ORKCollector_Internal.h"
 #import "ORKHelpers_Internal.h"
-#import "HKSample+ORKJSONDictionary.h"
+//#import "HKSample+ORKJSONDictionary.h"
 #import "CMMotionActivity+ORKJSONDictionary.h"
 #import "ORKHealthSampleQueryOperation.h"
 #import "ORKMotionActivityQueryOperation.h"
@@ -152,9 +152,9 @@ static NSString *const ItemIdentifierFormatWithTwoPlaceholders = @"org.researchk
 
 - (NSArray *)serializableObjectsForObjects:(NSArray<HKSample *> *)objects {
     NSMutableArray *elements = [NSMutableArray arrayWithCapacity:[objects count]];
-    for (HKSample *sample in objects) {
-        [elements addObject:[sample ork_JSONDictionaryWithOptions:(ORKSampleJSONOptions)(ORKSampleIncludeMetadata|ORKSampleIncludeSource|ORKSampleIncludeUUID) unit:self.unit]];
-    }
+//    for (HKSample *sample in objects) {
+//        [elements addObject:[sample ork_JSONDictionaryWithOptions:(ORKSampleJSONOptions)(ORKSampleIncludeMetadata|ORKSampleIncludeSource|ORKSampleIncludeUUID) unit:self.unit]];
+//    }
     
     return elements;
 }
@@ -249,9 +249,9 @@ static NSString *const ItemIdentifierFormatWithTwoPlaceholders = @"org.researchk
 
 - (NSArray *)serializableObjectsForObjects:(NSArray<HKCorrelation *> *)objects {
     NSMutableArray *elements = [NSMutableArray arrayWithCapacity:[objects count]];
-    for (HKCorrelation *correlation in objects) {
-        [elements addObject:[correlation ork_JSONDictionaryWithOptions:(ORKSampleJSONOptions)(ORKSampleIncludeMetadata|ORKSampleIncludeSource|ORKSampleIncludeUUID) sampleTypes:self.sampleTypes units:self.units]];
-    }
+//    for (HKCorrelation *correlation in objects) {
+//        [elements addObject:[correlation ork_JSONDictionaryWithOptions:(ORKSampleJSONOptions)(ORKSampleIncludeMetadata|ORKSampleIncludeSource|ORKSampleIncludeUUID) sampleTypes:self.sampleTypes units:self.units]];
+//    }
     
     return elements;
 }

@@ -125,8 +125,8 @@
 #import <ResearchKit/ORKAudioRecorder.h>
 #import <ResearchKit/ORKStreamingAudioRecorder.h>
 #import <ResearchKit/ORKDeviceMotionRecorder.h>
-#import <ResearchKit/ORKHealthQuantityTypeRecorder.h>
-#import <ResearchKit/ORKHealthClinicalTypeRecorder.h>
+//#import <ResearchKit/ORKHealthQuantityTypeRecorder.h>
+//#import <ResearchKit/ORKHealthClinicalTypeRecorder.h>
 #import <ResearchKit/ORKLocationRecorder.h>
 #import <ResearchKit/ORKPedometerRecorder.h>
 #import <ResearchKit/ORKTouchRecorder.h>

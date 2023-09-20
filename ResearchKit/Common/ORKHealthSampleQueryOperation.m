@@ -220,10 +220,10 @@ static NSUInteger const QueryLimitSize = 1000;
         if (delegate) {
             if ([_collector isKindOfClass:[ORKHealthCollector class]]
                 && [delegate respondsToSelector:@selector(healthCollector:didCollectSamples:)]) {
-                handoutSuccess = [delegate healthCollector:(ORKHealthCollector *)_collector didCollectSamples:results];
+//                handoutSuccess = [delegate healthCollector:(ORKHealthCollector *)_collector didCollectSamples:results];
             } else if ([_collector isKindOfClass:[ORKHealthCorrelationCollector class]]
                        && [delegate respondsToSelector:@selector(healthCorrelationCollector:didCollectCorrelations:)]) {
-                handoutSuccess = [delegate healthCorrelationCollector:(ORKHealthCorrelationCollector *)_collector didCollectCorrelations:(NSArray<HKCorrelation *> *)results];
+//                handoutSuccess = [delegate healthCorrelationCollector:(ORKHealthCorrelationCollector *)_collector didCollectCorrelations:(NSArray<HKCorrelation *> *)results];
             }
         }
         

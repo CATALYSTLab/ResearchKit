@@ -82,7 +82,7 @@
 
 - (NSSet<HKObjectType *> *)requestedHealthKitTypesForReading {
     if ([self.pageTask respondsToSelector:@selector(requestedHealthKitTypesForReading)]) {
-        return [self.pageTask requestedHealthKitTypesForReading];
+//        return [self.pageTask requestedHealthKitTypesForReading];
     }
     return nil;
 }

@@ -43,7 +43,7 @@
 @interface ORKHealthClinicalTypeRecorder () {
     ORKDataLogger *_logger;
     BOOL _isRecording;
-    HKHealthStore *_healthStore;
+//    HKHealthStore *_healthStore;
     ORKStep *_step;
 }
 
@@ -51,23 +51,23 @@
 
 @implementation ORKHealthClinicalTypeRecorder
 
-- (instancetype)initWithIdentifier:(NSString *)identifier
-                healthClinicalType:(HKClinicalType *)healthClinicalType
-            healthFHIRResourceType:(nullable HKFHIRResourceType)healthFHIRResourceType
-                              step:(ORKStep *)step
-                   outputDirectory:(NSURL *)outputDirectory {
-    self = [super initWithIdentifier:identifier
-                                step:step
-                     outputDirectory:outputDirectory];
-    if (self) {
-        NSParameterAssert(healthClinicalType != nil);
-        _healthClinicalType = healthClinicalType;
-        _healthFHIRResourceType = healthFHIRResourceType;
-        self.continuesInBackground = YES;
-        _step = step;
-    }
-    return self;
-}
+//- (instancetype)initWithIdentifier:(NSString *)identifier
+//                healthClinicalType:(HKClinicalType *)healthClinicalType
+//            healthFHIRResourceType:(nullable HKFHIRResourceType)healthFHIRResourceType
+//                              step:(ORKStep *)step
+//                   outputDirectory:(NSURL *)outputDirectory {
+//    self = [super initWithIdentifier:identifier
+//                                step:step
+//                     outputDirectory:outputDirectory];
+//    if (self) {
+//        NSParameterAssert(healthClinicalType != nil);
+//        _healthClinicalType = healthClinicalType;
+//        _healthFHIRResourceType = healthFHIRResourceType;
+//        self.continuesInBackground = YES;
+//        _step = step;
+//    }
+//    return self;
+//}
 
 - (void)dealloc {
     [_logger finishCurrentLog];
@@ -85,43 +85,43 @@
         }
     }
     
-    if (![HKHealthStore isHealthDataAvailable]) {
-        [self finishRecordingWithError:[NSError errorWithDomain:NSCocoaErrorDomain
-                                                           code:NSFeatureUnsupportedError
-                                                       userInfo:@{@"recorder" : self}]];
-        return;
-    }
-    
-    if (!_healthStore) {
-        _healthStore = [HKHealthStore new];
-    }
-    
-    HKSampleQuery *query = [[HKSampleQuery alloc] initWithSampleType:_healthClinicalType
-                                                           predicate:_healthFHIRResourceType ? [HKQuery predicateForClinicalRecordsWithFHIRResourceType:_healthFHIRResourceType] : nil limit:HKObjectQueryNoLimit
-                                                     sortDescriptors:nil
-                                                      resultsHandler:^(HKSampleQuery * _Nonnull sampleQuery, NSArray<__kindof HKSample *> * _Nullable sampleResults, NSError * _Nullable error) {
-                                                          NSUInteger resultCount = sampleResults.count;
-                                                          if (resultCount == 0) {
-                                                              return;
-                                                          }
-                                                          
-                                                          [sampleResults enumerateObjectsUsingBlock:^(HKClinicalRecord *clinicalRecord, NSUInteger idx, BOOL *stop) {
-                                                              
-                                                              NSError *logError = nil;
-                                                              [_logger append:clinicalRecord.FHIRResource.data error:&logError];
-                                                              if (logError) {
-                                                                  ORK_Log_Error("Failed to add health records object to the logger with error: %@", logError);
-                                                                  return;
-                                                              }
-                                                          }];
-                                                      }];
-    
-    _isRecording = YES;
-    [_healthStore executeQuery:query];
+//    if (![HKHealthStore isHealthDataAvailable]) {
+//        [self finishRecordingWithError:[NSError errorWithDomain:NSCocoaErrorDomain
+//                                                           code:NSFeatureUnsupportedError
+//                                                       userInfo:@{@"recorder" : self}]];
+//        return;
+//    }
+//    
+//    if (!_healthStore) {
+//        _healthStore = [HKHealthStore new];
+//    }
+//    
+//    HKSampleQuery *query = [[HKSampleQuery alloc] initWithSampleType:_healthClinicalType
+//                                                           predicate:_healthFHIRResourceType ? [HKQuery predicateForClinicalRecordsWithFHIRResourceType:_healthFHIRResourceType] : nil limit:HKObjectQueryNoLimit
+//                                                     sortDescriptors:nil
+//                                                      resultsHandler:^(HKSampleQuery * _Nonnull sampleQuery, NSArray<__kindof HKSample *> * _Nullable sampleResults, NSError * _Nullable error) {
+//                                                          NSUInteger resultCount = sampleResults.count;
+//                                                          if (resultCount == 0) {
+//                                                              return;
+//                                                          }
+//                                                          
+//                                                          [sampleResults enumerateObjectsUsingBlock:^(HKClinicalRecord *clinicalRecord, NSUInteger idx, BOOL *stop) {
+//                                                              
+//                                                              NSError *logError = nil;
+//                                                              [_logger append:clinicalRecord.FHIRResource.data error:&logError];
+//                                                              if (logError) {
+//                                                                  ORK_Log_Error("Failed to add health records object to the logger with error: %@", logError);
+//                                                                  return;
+//                                                              }
+//                                                          }];
+//                                                      }];
+//    
+//    _isRecording = YES;
+//    [_healthStore executeQuery:query];
 }
 
 - (NSString *)recorderType {
-    return _healthClinicalType.identifier;
+//    return _healthClinicalType.identifier;
 }
 
 - (void)stop {
@@ -179,57 +179,57 @@
     @throw [NSException exceptionWithName:NSGenericException reason:@"Use subclass designated initializer" userInfo:nil];
 }
 
-- (instancetype)initWithIdentifier:(NSString *)identifier
-                healthClinicalType:(HKClinicalType *)healthClinicalType
-            healthFHIRResourceType:(nullable HKFHIRResourceType)healthFHIRResourceType {
-    self = [super initWithIdentifier:identifier];
-    if (self) {
-        NSParameterAssert(healthClinicalType != nil);
-        _healthClinicalType = healthClinicalType;
-        _healthFHIRResourceType = healthFHIRResourceType;
-    }
-    return self;
-}
-#pragma clang diagnostic pop
-
-- (ORKRecorder *)recorderForStep:(ORKStep *)step
-                 outputDirectory:(NSURL *)outputDirectory {
-    return [[ORKHealthClinicalTypeRecorder alloc] initWithIdentifier:self.identifier
-                                                  healthClinicalType:_healthClinicalType
-                                              healthFHIRResourceType:_healthFHIRResourceType
-                                                                step:step
-                                                     outputDirectory:outputDirectory];
-}
+//- (instancetype)initWithIdentifier:(NSString *)identifier
+//                healthClinicalType:(HKClinicalType *)healthClinicalType
+//            healthFHIRResourceType:(nullable HKFHIRResourceType)healthFHIRResourceType {
+//    self = [super initWithIdentifier:identifier];
+//    if (self) {
+//        NSParameterAssert(healthClinicalType != nil);
+//        _healthClinicalType = healthClinicalType;
+//        _healthFHIRResourceType = healthFHIRResourceType;
+//    }
+//    return self;
+//}
+//#pragma clang diagnostic pop
+//
+//- (ORKRecorder *)recorderForStep:(ORKStep *)step
+//                 outputDirectory:(NSURL *)outputDirectory {
+//    return [[ORKHealthClinicalTypeRecorder alloc] initWithIdentifier:self.identifier
+//                                                  healthClinicalType:_healthClinicalType
+//                                              healthFHIRResourceType:_healthFHIRResourceType
+//                                                                step:step
+//                                                     outputDirectory:outputDirectory];
+//}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        ORK_DECODE_OBJ_CLASS(aDecoder, healthClinicalType, HKClinicalType);
-        ORK_DECODE_OBJ_CLASS(aDecoder, healthFHIRResourceType, NSString);
+//        ORK_DECODE_OBJ_CLASS(aDecoder, healthClinicalType, HKClinicalType);
+//        ORK_DECODE_OBJ_CLASS(aDecoder, healthFHIRResourceType, NSString);
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    ORK_ENCODE_OBJ(aCoder, healthClinicalType);
-    ORK_ENCODE_OBJ(aCoder, healthFHIRResourceType);
+//    ORK_ENCODE_OBJ(aCoder, healthClinicalType);
+//    ORK_ENCODE_OBJ(aCoder, healthFHIRResourceType);
 }
 
 + (BOOL)supportsSecureCoding {
     return YES;
 }
 
-- (BOOL)isEqual:(id)object {
-    BOOL isParentSame = [super isEqual:object];
-    
-    __typeof(self) castObject = object;
-    return (isParentSame &&
-            ORKEqualObjects(self.healthClinicalType, castObject.healthClinicalType)&&
-            ORKEqualObjects(self.healthFHIRResourceType, castObject.healthFHIRResourceType));
-}
+//- (BOOL)isEqual:(id)object {
+//    BOOL isParentSame = [super isEqual:object];
+//    
+//    __typeof(self) castObject = object;
+//    return (isParentSame &&
+//            ORKEqualObjects(self.healthClinicalType, castObject.healthClinicalType)&&
+//            ORKEqualObjects(self.healthFHIRResourceType, castObject.healthFHIRResourceType));
+//}
 
 - (NSSet *)requestedHealthKitTypesForReading {
-    return [NSSet setWithObject:_healthClinicalType];
+//    return [NSSet setWithObject:_healthClinicalType];
 }
 
 @end

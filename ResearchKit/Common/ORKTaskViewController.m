@@ -445,12 +445,12 @@ static NSString *const _ChildNavigationControllerRestorationKey = @"childNavigat
     
     NSSet *readTypes = nil;
     if ([self.task respondsToSelector:@selector(requestedHealthKitTypesForReading)]) {
-        readTypes = [self.task requestedHealthKitTypesForReading];
+//        readTypes = [self.task requestedHealthKitTypesForReading];
     }
     
     NSSet *writeTypes = nil;
     if ([self.task respondsToSelector:@selector(requestedHealthKitTypesForWriting)]) {
-        writeTypes = [self.task requestedHealthKitTypesForWriting];
+//        writeTypes = [self.task requestedHealthKitTypesForWriting];
     }
     
     ORKPermissionMask permissions = [self desiredPermissions];

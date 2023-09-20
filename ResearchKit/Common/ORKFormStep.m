@@ -182,17 +182,18 @@
 }
 
 - (NSSet<HKObjectType *> *)requestedHealthKitTypesForReading {
-    NSMutableSet<HKObjectType *> *healthTypes = [NSMutableSet set];
-    
-    for (ORKFormItem *formItem in self.formItems) {
-        ORKAnswerFormat *answerFormat = [formItem answerFormat];
-        HKObjectType *objType = [answerFormat healthKitObjectTypeForAuthorization];
-        if (objType) {
-            [healthTypes addObject:objType];
-        }
-    }
-    
-    return healthTypes.count ? healthTypes : nil;
+    return nil;
+//    NSMutableSet<HKObjectType *> *healthTypes = [NSMutableSet set];
+//    
+//    for (ORKFormItem *formItem in self.formItems) {
+//        ORKAnswerFormat *answerFormat = [formItem answerFormat];
+//        HKObjectType *objType = [answerFormat healthKitObjectTypeForAuthorization];
+//        if (objType) {
+//            [healthTypes addObject:objType];
+//        }
+//    }
+//    
+//    return healthTypes.count ? healthTypes : nil;
 }
 
 @end
