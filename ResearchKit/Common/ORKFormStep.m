@@ -181,8 +181,7 @@
     }
 }
 
-- (NSSet<HKObjectType *> *)requestedHealthKitTypesForReading {
-    return nil;
+//- (NSSet<HKObjectType *> *)requestedHealthKitTypesForReading {
 //    NSMutableSet<HKObjectType *> *healthTypes = [NSMutableSet set];
 //    
 //    for (ORKFormItem *formItem in self.formItems) {
@@ -194,7 +193,7 @@
 //    }
 //    
 //    return healthTypes.count ? healthTypes : nil;
-}
+//}
 
 @end
 

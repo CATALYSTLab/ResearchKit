@@ -47,18 +47,18 @@ static uint32_t const IconTintColor = 0xFF5E5E;
     ORKThrowMethodUnavailableException();
 }
 
-- (instancetype)initWithSampleTypesToWrite:(NSSet<HKSampleType *> *)sampleTypesToWrite objectTypesToRead:(NSSet<HKObjectType *> *)objectTypesToRead {
-    self = [super init];
-    
-    if (self) {
-        self.sampleTypesToWrite = sampleTypesToWrite;
-        self.objectTypesToRead = objectTypesToRead;
-        [self setupCardView];
-        [self checkHealthKitAuthorizationStatus];
-    }
-    
-    return self;
-}
+//- (instancetype)initWithSampleTypesToWrite:(NSSet<HKSampleType *> *)sampleTypesToWrite objectTypesToRead:(NSSet<HKObjectType *> *)objectTypesToRead {
+//    self = [super init];
+//    
+//    if (self) {
+//        self.sampleTypesToWrite = sampleTypesToWrite;
+//        self.objectTypesToRead = objectTypesToRead;
+//        [self setupCardView];
+//        [self checkHealthKitAuthorizationStatus];
+//    }
+//    
+//    return self;
+//}
 
 - (void)setupCardView {
     UIImage *image;
@@ -77,50 +77,50 @@ static uint32_t const IconTintColor = 0xFF5E5E;
 }
 
 - (void)checkHealthKitAuthorizationStatus {
-    if (![HKHealthStore isHealthDataAvailable]) {
-        [self setState:ORKRequestPermissionsButtonStateNotSupported canContinue:YES];
-        return;
-    }
-
-    if (@available(iOS 12.0, *)) {
-        [[HKHealthStore new] getRequestStatusForAuthorizationToShareTypes:_sampleTypesToWrite readTypes:_objectTypesToRead completion:^(HKAuthorizationRequestStatus requestStatus, NSError * _Nullable error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-
-                if (error) {
-                    [self setState:ORKRequestPermissionsButtonStateDefault canContinue:NO];
-                    return;
-                }
-
-                switch (requestStatus) {
-
-                    case HKAuthorizationStatusSharingAuthorized:
-                        [self setState:ORKRequestPermissionsButtonStateConnected canContinue:YES];
-                        break;
-
-                    case HKAuthorizationRequestStatusShouldRequest:
-                    case HKAuthorizationRequestStatusUnknown:
-                        [self setState:ORKRequestPermissionsButtonStateDefault canContinue:NO];
-                        break;
-                }
-            });
-        }];
-    } else {
-        [self setState:ORKRequestPermissionsButtonStateDefault canContinue:NO];
-    }
+//    if (![HKHealthStore isHealthDataAvailable]) {
+//        [self setState:ORKRequestPermissionsButtonStateNotSupported canContinue:YES];
+//        return;
+//    }
+//
+//    if (@available(iOS 12.0, *)) {
+//        [[HKHealthStore new] getRequestStatusForAuthorizationToShareTypes:_sampleTypesToWrite readTypes:_objectTypesToRead completion:^(HKAuthorizationRequestStatus requestStatus, NSError * _Nullable error) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//
+//                if (error) {
+//                    [self setState:ORKRequestPermissionsButtonStateDefault canContinue:NO];
+//                    return;
+//                }
+//
+//                switch (requestStatus) {
+//
+//                    case HKAuthorizationStatusSharingAuthorized:
+//                        [self setState:ORKRequestPermissionsButtonStateConnected canContinue:YES];
+//                        break;
+//
+//                    case HKAuthorizationRequestStatusShouldRequest:
+//                    case HKAuthorizationRequestStatusUnknown:
+//                        [self setState:ORKRequestPermissionsButtonStateDefault canContinue:NO];
+//                        break;
+//                }
+//            });
+//        }];
+//    } else {
+//        [self setState:ORKRequestPermissionsButtonStateDefault canContinue:NO];
+//    }
 }
 
 - (void)requestPermissionButtonPressed {
-    [[HKHealthStore new] requestAuthorizationToShareTypes:_sampleTypesToWrite readTypes:_objectTypesToRead completion:^(BOOL success, NSError * _Nullable error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-
-            if (error) {
-                [self setState:ORKRequestPermissionsButtonStateError canContinue:YES];
-                return;
-            }
-
-            [self setState:ORKRequestPermissionsButtonStateConnected canContinue:YES];
-        });
-    }];
+//    [[HKHealthStore new] requestAuthorizationToShareTypes:_sampleTypesToWrite readTypes:_objectTypesToRead completion:^(BOOL success, NSError * _Nullable error) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//            if (error) {
+//                [self setState:ORKRequestPermissionsButtonStateError canContinue:YES];
+//                return;
+//            }
+//
+//            [self setState:ORKRequestPermissionsButtonStateConnected canContinue:YES];
+//        });
+//    }];
 }
 
 - (void)setState:(ORKRequestPermissionsButtonState)state canContinue:(BOOL)canContinue {
@@ -132,11 +132,12 @@ static uint32_t const IconTintColor = 0xFF5E5E;
     if ([self class] != [object class]) {
         return NO;
     }
+    return NO;
 
-    __typeof(self) castObject = object;
-    return
-        ORKEqualObjects(self.objectTypesToRead, castObject.objectTypesToRead) &&
-        ORKEqualObjects(self.sampleTypesToWrite, castObject.sampleTypesToWrite);
+//    __typeof(self) castObject = object;
+//    return
+//        ORKEqualObjects(self.objectTypesToRead, castObject.objectTypesToRead) &&
+//        ORKEqualObjects(self.sampleTypesToWrite, castObject.sampleTypesToWrite);
 }
 
 @end

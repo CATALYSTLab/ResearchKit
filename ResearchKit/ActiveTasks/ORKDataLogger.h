@@ -36,7 +36,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class ORKDataLogger;
-@class HKUnit;
+//@class HKUnit;
 
 /**
  The `ORKDataLoggerDelegate` protocol defines methods that the delegate of an `ORKDataLogger` object uses to handle data being logged to disk.

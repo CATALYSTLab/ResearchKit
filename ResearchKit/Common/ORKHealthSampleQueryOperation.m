@@ -42,7 +42,7 @@ static NSUInteger const QueryLimitSize = 1000;
     // All of these are strong references created at init time
     ORKCollector<ORKHealthCollectable> *_collector;
     __weak ORKDataCollectionManager *_manager;
-    HKQueryAnchor *_currentAnchor;
+//    HKQueryAnchor *_currentAnchor;
     dispatch_semaphore_t _sem;
 }
 
@@ -69,7 +69,7 @@ static NSUInteger const QueryLimitSize = 1000;
     if (self) {
         _collector = collector;
         _manager = manager;
-        _currentAnchor = nil;
+//        _currentAnchor = nil;
         _sem = dispatch_semaphore_create(0);
         
         self.startBlock = ^void(ORKOperation* operation) {
@@ -92,10 +92,10 @@ static NSUInteger const QueryLimitSize = 1000;
 - (void)doNextQuery {
     [self.lock lock];
     
-    __block HKSampleType *sampleType = nil;
-    __block NSDate *startDate = nil;
+//    __block HKSampleType *sampleType = nil;
+//    __block NSDate *startDate = nil;
     
-    __block HKQueryAnchor *lastAnchor = nil;
+//    __block HKQueryAnchor *lastAnchor = nil;
     __block NSString *itemIdentifier = nil;
     
     // Check if everything's valid and we should continue with collection
@@ -108,24 +108,24 @@ static NSUInteger const QueryLimitSize = 1000;
         BOOL changed = NO;
         if (shouldContinue) {
             // _currentAnchor will be NSNotFound on the first pass of the operation
-            if (_currentAnchor != nil) {
-                changed = YES;
-                // Update the anchor if we have one
-                _collector.lastAnchor = [_currentAnchor copy];
-            }
-            
-            lastAnchor = _collector.lastAnchor;
-            sampleType = _collector.sampleType;
-            startDate = _collector.startDate;
+//            if (_currentAnchor != nil) {
+//                changed = YES;
+//                // Update the anchor if we have one
+//                _collector.lastAnchor = [_currentAnchor copy];
+//            }
+//            
+//            lastAnchor = _collector.lastAnchor;
+//            sampleType = _collector.sampleType;
+//            startDate = _collector.startDate;
             itemIdentifier = _collector.identifier;
         }
         
         return changed;
     }];
 
-    if (_currentAnchor == nil) {
-        _currentAnchor = lastAnchor;
-    }
+//    if (_currentAnchor == nil) {
+//        _currentAnchor = lastAnchor;
+//    }
     
     if (!shouldContinue) {
         [self finishWithErrorCode:ORKErrorInvalidObject];
@@ -133,115 +133,115 @@ static NSUInteger const QueryLimitSize = 1000;
         return;
     }
     
-    __weak ORKHealthSampleQueryOperation * weakSelf = self;
-    
-    NSPredicate *predicate = nil;
-    if (startDate) {
-        predicate = [HKQuery predicateForSamplesWithStartDate:startDate endDate:nil options:HKQueryOptionStrictStartDate];
-    }
-    
-    HKQueryAnchor *anchor = _currentAnchor;
-    HKAnchoredObjectQuery *syncQuery = [[HKAnchoredObjectQuery alloc] initWithType:sampleType
-                                                                         predicate:predicate
-                                                                            anchor:anchor
-                                                                             limit:QueryLimitSize
-                                                                    resultsHandler:^(HKAnchoredObjectQuery *query,
-                                                                                     NSArray<__kindof HKSample *> *sampleObjects,
-                                                                                     NSArray<HKDeletedObject *> *deletedObjects,
-                                                                                     HKQueryAnchor *newAnchor,
-                                                                                     NSError *error) {
-                                                                        
-                                                                        ORKHealthSampleQueryOperation *op = weakSelf;
-                                                                        ORK_Log_Debug("\nHK Query returned: %@\n", @{@"sampleType": sampleType, @"items":@([sampleObjects count]), @"newAnchor":[newAnchor description]?:@"nil"});
-                                                                        // Signal that query returned
-                                                                        dispatch_semaphore_signal(_sem);
-                                                                        [op handleResults:sampleObjects newAnchor:newAnchor error:error itemIdentifier:itemIdentifier];
-                                                                 }];
-
-    
-    ORK_Log_Debug("\nHK Query: %@ \n", @{@"identifier": sampleType.identifier, @"anchor": anchor.description ? :@"", @"startDate": [NSDateFormatter localizedStringFromDate:startDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle]});
-    [_manager.healthStore executeQuery:syncQuery];
-    
-    [self.lock unlock];
-    
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC));
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        if (dispatch_semaphore_wait(_sem, timeout)) {
-            [self timeoutForAnchor:anchor];
-        }
-    });
+//    __weak ORKHealthSampleQueryOperation * weakSelf = self;
+//    
+//    NSPredicate *predicate = nil;
+//    if (startDate) {
+//        predicate = [HKQuery predicateForSamplesWithStartDate:startDate endDate:nil options:HKQueryOptionStrictStartDate];
+//    }
+//    
+//    HKQueryAnchor *anchor = _currentAnchor;
+//    HKAnchoredObjectQuery *syncQuery = [[HKAnchoredObjectQuery alloc] initWithType:sampleType
+//                                                                         predicate:predicate
+//                                                                            anchor:anchor
+//                                                                             limit:QueryLimitSize
+//                                                                    resultsHandler:^(HKAnchoredObjectQuery *query,
+//                                                                                     NSArray<__kindof HKSample *> *sampleObjects,
+//                                                                                     NSArray<HKDeletedObject *> *deletedObjects,
+//                                                                                     HKQueryAnchor *newAnchor,
+//                                                                                     NSError *error) {
+//                                                                        
+//                                                                        ORKHealthSampleQueryOperation *op = weakSelf;
+//                                                                        ORK_Log_Debug("\nHK Query returned: %@\n", @{@"sampleType": sampleType, @"items":@([sampleObjects count]), @"newAnchor":[newAnchor description]?:@"nil"});
+//                                                                        // Signal that query returned
+//                                                                        dispatch_semaphore_signal(_sem);
+//                                                                        [op handleResults:sampleObjects newAnchor:newAnchor error:error itemIdentifier:itemIdentifier];
+//                                                                 }];
+//
+//    
+//    ORK_Log_Debug("\nHK Query: %@ \n", @{@"identifier": sampleType.identifier, @"anchor": anchor.description ? :@"", @"startDate": [NSDateFormatter localizedStringFromDate:startDate dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle]});
+//    [_manager.healthStore executeQuery:syncQuery];
+//    
+//    [self.lock unlock];
+//    
+//    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC));
+//    
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//        if (dispatch_semaphore_wait(_sem, timeout)) {
+//            [self timeoutForAnchor:anchor];
+//        }
+//    });
     
 }
 
-- (void)timeoutForAnchor:(HKQueryAnchor *)anchor {
-    ORK_Log_Debug("Query timeout: cancel operation %@", self);
-    [self.lock lock];
-    
-    if ([self isExecuting] && ![self isCancelled] && [anchor isEqual:_currentAnchor]) {
-        self.error = [NSError errorWithDomain:ORKErrorDomain code:ORKErrorException userInfo:@{NSLocalizedDescriptionKey:@"Query timeout"}];
-        [self safeFinish];
-    }
-    
-    [self.lock unlock];
-}
+//- (void)timeoutForAnchor:(HKQueryAnchor *)anchor {
+//    ORK_Log_Debug("Query timeout: cancel operation %@", self);
+//    [self.lock lock];
+//    
+//    if ([self isExecuting] && ![self isCancelled] && [anchor isEqual:_currentAnchor]) {
+//        self.error = [NSError errorWithDomain:ORKErrorDomain code:ORKErrorException userInfo:@{NSLocalizedDescriptionKey:@"Query timeout"}];
+//        [self safeFinish];
+//    }
+//    
+//    [self.lock unlock];
+//}
 
 /*
  Handles the result of an HKAnchoredObjectQuery, and starts a new query if needed
  */
-- (void)handleResults:(NSArray<HKSample *> *)results
-            newAnchor:(HKQueryAnchor *)newAnchor
-                error:(NSError *)error
-       itemIdentifier:(NSString *)itemIdentifier {
-    [self.lock lock];
-    // Check our actual state under the lock
-    
-    if (![self isExecuting] || [self isCancelled]) {
-        // Give up immediately if we've been cancelled or are no longer executing
-        [self.lock unlock];
-        return;
-    }
-    if (error) {
-        // Give up if there was an error performing the query
-        self.error = error;
-        [self safeFinish];
-        [self.lock unlock];
-        return;
-    }
-    
-    [self.lock unlock];
-    
-    BOOL doContinue = (results && [results count] > 0);
-    if (doContinue) {        
-        id<ORKDataCollectionManagerDelegate> delegate = _manager.delegate;
-        
-        BOOL handoutSuccess = NO;
-        
-        if (delegate) {
-            if ([_collector isKindOfClass:[ORKHealthCollector class]]
-                && [delegate respondsToSelector:@selector(healthCollector:didCollectSamples:)]) {
-//                handoutSuccess = [delegate healthCollector:(ORKHealthCollector *)_collector didCollectSamples:results];
-            } else if ([_collector isKindOfClass:[ORKHealthCorrelationCollector class]]
-                       && [delegate respondsToSelector:@selector(healthCorrelationCollector:didCollectCorrelations:)]) {
-//                handoutSuccess = [delegate healthCorrelationCollector:(ORKHealthCorrelationCollector *)_collector didCollectCorrelations:(NSArray<HKCorrelation *> *)results];
-            }
-        }
-        
-        if (!handoutSuccess) {
-            doContinue = NO;
-            self.error = [NSError errorWithDomain:ORKErrorDomain code:ORKErrorException userInfo:@{NSLocalizedFailureReasonErrorKey: @"Results were not properly delivered to the data collection manager delegate."}];
-        }
-    }
-    
-    if (doContinue) {
-        // Do the next fetch
-        self->_currentAnchor = newAnchor;
-        [self doNextQuery];
-
-    } else {
-        // Stop for now (even if maybe we haven't fetched all the records)
-        [self safeFinish];
-    }
-}
+//- (void)handleResults:(NSArray<HKSample *> *)results
+//            newAnchor:(HKQueryAnchor *)newAnchor
+//                error:(NSError *)error
+//       itemIdentifier:(NSString *)itemIdentifier {
+//    [self.lock lock];
+//    // Check our actual state under the lock
+//    
+//    if (![self isExecuting] || [self isCancelled]) {
+//        // Give up immediately if we've been cancelled or are no longer executing
+//        [self.lock unlock];
+//        return;
+//    }
+//    if (error) {
+//        // Give up if there was an error performing the query
+//        self.error = error;
+//        [self safeFinish];
+//        [self.lock unlock];
+//        return;
+//    }
+//    
+//    [self.lock unlock];
+//    
+//    BOOL doContinue = (results && [results count] > 0);
+//    if (doContinue) {        
+//        id<ORKDataCollectionManagerDelegate> delegate = _manager.delegate;
+//        
+//        BOOL handoutSuccess = NO;
+//        
+//        if (delegate) {
+//            if ([_collector isKindOfClass:[ORKHealthCollector class]]
+//                && [delegate respondsToSelector:@selector(healthCollector:didCollectSamples:)]) {
+////                handoutSuccess = [delegate healthCollector:(ORKHealthCollector *)_collector didCollectSamples:results];
+//            } else if ([_collector isKindOfClass:[ORKHealthCorrelationCollector class]]
+//                       && [delegate respondsToSelector:@selector(healthCorrelationCollector:didCollectCorrelations:)]) {
+////                handoutSuccess = [delegate healthCorrelationCollector:(ORKHealthCorrelationCollector *)_collector didCollectCorrelations:(NSArray<HKCorrelation *> *)results];
+//            }
+//        }
+//        
+//        if (!handoutSuccess) {
+//            doContinue = NO;
+//            self.error = [NSError errorWithDomain:ORKErrorDomain code:ORKErrorException userInfo:@{NSLocalizedFailureReasonErrorKey: @"Results were not properly delivered to the data collection manager delegate."}];
+//        }
+//    }
+//    
+//    if (doContinue) {
+//        // Do the next fetch
+//        self->_currentAnchor = newAnchor;
+//        [self doNextQuery];
+//
+//    } else {
+//        // Stop for now (even if maybe we haven't fetched all the records)
+//        [self safeFinish];
+//    }
+//}
 
 @end
